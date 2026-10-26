@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Employee AI Invocation Simulator - Shadow AI Governance Testing Tool">
+    <title>Employee AI Simulator | Shadow AI</title>
+    <!-- Standard Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111827'><rect width='24' height='24'/><path d='M4 4h16v16H4z' fill='%23ffffff'/><path d='M6 6h12v3H6zm0 5h12v3H6zm0 5h8v2H6z' fill='%23111827'/></svg>">
+    <!-- Standard Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        /* Strict Utilitarian Monochromatic Aesthetic */
+        :root {
+            --bg-body: #f9fafb;
+            --text-main: #111827;
+            --text-muted: #4b5563;
+            --border-color: #d1d5db;
+        }
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        /* Strict sharp-edged enforcement across all components */
+        *, .btn, .card, .badge, .form-control, .form-select, .alert, .table {
+            border-radius: 0 !important;
+        }
+        .header-bar {
+            background-color: #000000;
+            color: #ffffff;
+            border-bottom: 2px solid #374151;
+        }
+        .panel-box {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+        }
+        .form-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+        }
+        .btn-dispatch {
+            background-color: #000000;
+            color: #ffffff;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid #000000;
+        }
+        .btn-dispatch:hover {
+            background-color: #1f2937;
+            color: #ffffff;
+            border-color: #1f2937;
+        }
+        .response-terminal {
+            background-color: #111827;
+            color: #f3f4f6;
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.82rem;
+            padding: 1rem;
+            border: 1px solid #374151;
+            min-height: 180px;
+            max-height: 320px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .site-footer {
+            border-top: 1px solid var(--border-color);
+            background-color: #ffffff;
+            padding: 1.5rem 0;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .site-footer a {
+            color: #111827;
+            text-decoration: underline;
+        }
+        .site-footer a:hover {
+            color: #000000;
+        }
+        .rule-pill {
+            font-family: monospace;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            background-color: #e5e7eb;
+            color: #111827;
+            border: 1px solid #d1d5db;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="header-bar py-3">
+        <div class="container-fluid px-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h5 m-0 fw-bold tracking-tight text-white">SHADOW_AI // EMPLOYEE SIMULATOR</h1>
+                    <div class="small text-secondary" style="font-size: 0.75rem;">RUN-TIME GOVERNANCE POLICY TEST ENVIRONMENT</div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="/" class="btn btn-outline-light btn-sm px-3">VIEW AUDIT REGISTRY</a>
+                    <a href="/admin/" class="btn btn-outline-light btn-sm px-3">ADMIN</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="container-fluid px-4 py-4">
+
+        <div class="row g-4">
+            <!-- Left Column: Simulation Form -->
+            <div class="col-12 col-lg-7">
+                <div class="panel-box">
+                    <div class="border-bottom pb-2 mb-3">
+                        <h2 class="h6 fw-bold text-uppercase m-0">Prompt Dispatch Request</h2>
+                        <div class="small text-muted">Test requests intercepted by <code>ShadowAIInterceptor</code> at <code>/api/send-prompt/</code></div>
+                    </div>
+
+                    <form id="simulatorForm">
+                        <!-- User ID Input -->
+                        <div class="mb-3">
+                            <label for="userIdInput" class="form-label">Employee / Service Identifier</label>
+                            <input type="text" class="form-control" id="userIdInput" value="emp_analyst_402" required>
+                            <div class="form-text small text-muted">Unique user ID logged in the provenance registry.</div>
+                        </div>
+
+                        <!-- Target Model Selection -->
+                        <div class="mb-3">
+                            <label for="modelSelect" class="form-label">Target AI Model</label>
+                            <select class="form-select" id="modelSelect" required>
+                                {% for model in models %}
+                                <option value="{{ model.id }}" data-tier="{{ model.approved_data_tier }}" data-name="{{ model.model_name }}" data-vendor="{{ model.vendor }}">
+                                    {{ model.model_name }} ({{ model.vendor }}) [Max Approved Tier: {{ model.approved_data_tier }}]
+                                </option>
+                                {% empty %}
+                                <option value="" disabled selected>No active models registered in AIModelInventory</option>
+                                {% endfor %}
+                            </select>
+                            <div class="form-text small text-muted">Selected model clearance level determines allowable data tiers.</div>
+                        </div>
+
+                        <!-- Submitted Data Tier Selection -->
+                        <div class="mb-3">
+                            <label for="dataTierSelect" class="form-label">Payload Data Sensitivity Tier</label>
+                            <select class="form-select" id="dataTierSelect" required>
+                                <option value="1">Tier 1: Public Data (Unrestricted, external knowledge)</option>
+                                <option value="2" selected>Tier 2: Internal / Proprietary Data (Internal memos, operational specs)</option>
+                                <option value="3">Tier 3: Highly Restricted / Sensitive Data (PII, financial records, API secrets)</option>
+                            </select>
+                            <div class="form-text small text-muted">If Submitted Tier &gt; Model Approved Tier, the interceptor blocks the request.</div>
+                        </div>
+
+                        <!-- Prompt Content -->
+                        <div class="mb-3">
+                            <label for="promptInput" class="form-label">Prompt Content Payload</label>
+                            <textarea class="form-control" id="promptInput" rows="4" placeholder="Enter test prompt payload to dispatch..."></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <button type="submit" class="btn btn-dispatch" id="submitBtn">
+                                DISPATCH PROMPT TO /api/send-prompt/
+                            </button>
+                            <span class="small text-muted font-monospace" id="statusIndicator">READY</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Column: Live Interceptor Verdict Terminal -->
+            <div class="col-12 col-lg-5">
+                <div class="panel-box h-100 d-flex flex-column">
+                    <div class="border-bottom pb-2 mb-3 d-flex justify-content-between align-items-center">
+                        <h2 class="h6 fw-bold text-uppercase m-0">Interceptor Runtime Verdict</h2>
+                        <span class="rule-pill" id="httpStatusBadge">HTTP --</span>
+                    </div>
+
+                    <!-- Live Verdict Box -->
+                    <div id="verdictSummary" class="alert alert-secondary p-3 mb-3 border">
+                        <div class="fw-bold" id="verdictHeadline">Awaiting Request Execution</div>
+                        <div class="small mt-1 text-muted" id="verdictDetails">Submit the form to trigger live compliance validation by ShadowAIInterceptor.</div>
+                    </div>
+
+                    <!-- Terminal Output Window -->
+                    <label class="form-label">Raw HTTP Response Stream</label>
+                    <div class="response-terminal flex-grow-1" id="responseTerminal">{"status": "idle", "message": "No prompt dispatched yet."}</div>
+
+                    <div class="mt-3 pt-3 border-top d-flex justify-content-between align-items-center">
+                        <span class="small text-muted">Audits are saved to MySQL instantly.</span>
+                        <a href="/" class="btn btn-outline-dark btn-sm">VIEW AUDIT REGISTRY &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Utilitarian Site Footer -->
+    <footer class="site-footer">
+        <div class="container-fluid px-4">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                <div>
+                    <strong>Shadow AI Governance System</strong> | Structured Data Registry &amp; Compliance Auditor
+                </div>
+                <nav class="d-flex gap-3">
+                    <a href="/">Audit Registry</a>
+                    <a href="/simulate/">Simulator</a>
+                    <a href="/privacy/">Privacy Policy</a>
+                    <a href="/terms/">Terms &amp; Conditions</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Form Handler Script -->
+    <script>
+        document.getElementById('simulatorForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const statusIndicator = document.getElementById('statusIndicator');
+            const httpStatusBadge = document.getElementById('httpStatusBadge');
+            const verdictSummary = document.getElementById('verdictSummary');
+            const verdictHeadline = document.getElementById('verdictHeadline');
+            const verdictDetails = document.getElementById('verdictDetails');
+            const responseTerminal = document.getElementById('responseTerminal');
+
+            const userId = document.getElementById('userIdInput').value.trim();
+            const modelId = document.getElementById('modelSelect').value;
+            const dataTier = parseInt(document.getElementById('dataTierSelect').value, 10);
+            const promptText = document.getElementById('promptInput').value.trim();
+
+            if (!modelId) {
+                alert('Please select an AI model from the dropdown.');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            statusIndicator.textContent = 'DISPATCHING...';
+            responseTerminal.textContent = '>> Discarding previous state...\n>> Sending POST request to /api/send-prompt/...\n>> Intercepted by ShadowAIInterceptor...';
+
+            const payload = {
+                user_id: userId,
+                model_id: modelId,
+                data_tier: dataTier,
+                prompt: promptText
+            };
+
+            try {
+                const response = await fetch('/api/send-prompt/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                const statusCode = response.status;
+
+                httpStatusBadge.textContent = 'HTTP ' + statusCode;
+
+                if (statusCode === 403) {
+                    // Compliance Blocked
+                    verdictSummary.className = 'alert alert-dark p-3 mb-3 border border-dark text-white bg-black';
+                    verdictHeadline.textContent = 'GOVERNANCE VERDICT: BLOCKED (403 FORBIDDEN)';
+                    verdictDetails.textContent = data.error || 'Request was halted by ShadowAIInterceptor due to policy violation.';
+                } else if (statusCode === 200) {
+                    // Compliant Approved
+                    verdictSummary.className = 'alert alert-light p-3 mb-3 border border-dark text-dark bg-white';
+                    verdictHeadline.textContent = 'GOVERNANCE VERDICT: APPROVED (200 OK)';
+                    verdictDetails.textContent = data.message || 'Data sensitivity complies with target model clearance level.';
+                } else {
+                    verdictSummary.className = 'alert alert-secondary p-3 mb-3 border text-dark';
+                    verdictHeadline.textContent = 'RESPONSE STATUS: ' + statusCode;
+                    verdictDetails.textContent = data.error || 'Server responded with status code ' + statusCode;
+                }
+
+                responseTerminal.textContent = JSON.stringify(data, null, 2);
+                statusIndicator.textContent = 'DONE (' + statusCode + ')';
+            } catch (err) {
+                httpStatusBadge.textContent = 'ERR';
+                verdictSummary.className = 'alert alert-dark p-3 mb-3 border text-white bg-dark';
+                verdictHeadline.textContent = 'NETWORK / EXECUTION ERROR';
+                verdictDetails.textContent = err.message;
+                responseTerminal.textContent = 'Error: ' + err.message;
+                statusIndicator.textContent = 'FAILED';
+            } finally {
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+
+    <!-- Standard Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

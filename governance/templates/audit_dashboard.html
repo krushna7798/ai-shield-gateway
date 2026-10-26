@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shadow AI Governance and Provenance Audit Registry">
+    <title>AI Governance Audit Registry | Shadow AI</title>
+    <!-- Standard Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111827'><rect width='24' height='24'/><path d='M4 4h16v16H4z' fill='%23ffffff'/><path d='M6 6h12v3H6zm0 5h12v3H6zm0 5h8v2H6z' fill='%23111827'/></svg>">
+    <!-- Standard Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        /* Strict Utilitarian Monochromatic Data Registry */
+        :root {
+            --bg-body: #f9fafb;
+            --text-main: #111827;
+            --text-muted: #4b5563;
+            --border-color: #d1d5db;
+        }
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        /* Enforce sharp edges across all components */
+        *, .btn, .card, .badge, .table, .navbar, .form-control, .alert {
+            border-radius: 0 !important;
+        }
+        .header-bar {
+            background-color: #000000;
+            color: #ffffff;
+            border-bottom: 2px solid #374151;
+        }
+        .table th {
+            background-color: #1f2937;
+            color: #ffffff;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .table td {
+            font-size: 0.86rem;
+            vertical-align: middle;
+        }
+        .stat-box {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 1rem 1.25rem;
+        }
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #000000;
+            font-variant-numeric: tabular-nums;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-top: 0.25rem;
+        }
+        .badge-blocked {
+            background-color: #000000;
+            color: #ffffff;
+            border: 1px solid #000000;
+            font-weight: 600;
+            padding: 0.35em 0.65em;
+        }
+        .badge-approved {
+            background-color: #ffffff;
+            color: #111827;
+            border: 1px solid #111827;
+            font-weight: 600;
+            padding: 0.35em 0.65em;
+        }
+        .tier-tag {
+            font-family: monospace;
+            font-size: 0.8rem;
+            padding: 0.15rem 0.4rem;
+            background-color: #e5e7eb;
+            color: #111827;
+            border: 1px solid #d1d5db;
+        }
+        .site-footer {
+            border-top: 1px solid var(--border-color);
+            background-color: #ffffff;
+            padding: 1.5rem 0;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .site-footer a {
+            color: #111827;
+            text-decoration: underline;
+        }
+        .site-footer a:hover {
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Utilitarian Top Navigation -->
+    <header class="header-bar py-3">
+        <div class="container-fluid px-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h5 m-0 fw-bold tracking-tight text-white">SHADOW_AI // GOVERNANCE REGISTRY</h1>
+                    <div class="small text-secondary" style="font-size: 0.75rem;">RUNTIME PROVENANCE AUDIT LOG</div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="/portal/" class="btn btn-outline-light btn-sm px-3">PORTAL</a>
+                    <a href="/simulate/" class="btn btn-light btn-sm px-3 fw-bold text-dark">TEST SIMULATOR</a>
+                    <a href="/admin/" class="btn btn-outline-light btn-sm px-3">ADMIN</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="container-fluid px-4 py-4">
+
+        <!-- System Summary Metrics -->
+        <section class="row g-3 mb-4">
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="stat-box">
+                    <div class="stat-value">{{ total_logs }}</div>
+                    <div class="stat-label">Total Provenance Logs</div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="stat-box">
+                    <div class="stat-value">{{ approved_count }}</div>
+                    <div class="stat-label">Approved Invocations</div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="stat-box">
+                    <div class="stat-value">{{ blocked_count }}</div>
+                    <div class="stat-label">Blocked Violations</div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="stat-box">
+                    <div class="stat-value">{{ registered_models_count }}</div>
+                    <div class="stat-label">Registered AI Models</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Log Audit Table Section -->
+        <section class="card border-dark mb-4">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-2 px-3">
+                <span class="fw-semibold small text-uppercase">Provenance Execution Records</span>
+                <span class="small text-secondary">Ordered by Timestamp (Descending)</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover m-0">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 70px;">ID</th>
+                            <th scope="col" style="width: 190px;">Timestamp (UTC)</th>
+                            <th scope="col">User Identifier</th>
+                            <th scope="col">Target Model</th>
+                            <th scope="col">Vendor</th>
+                            <th scope="col" class="text-center" style="width: 150px;">Approved Tier</th>
+                            <th scope="col" class="text-center" style="width: 150px;">Submitted Tier</th>
+                            <th scope="col" class="text-center" style="width: 130px;">Action Taken</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for log in logs %}
+                        <tr>
+                            <td class="font-monospace text-muted">#{{ log.id }}</td>
+                            <td class="font-monospace">{{ log.timestamp|date:"Y-m-d H:i:s" }}</td>
+                            <td class="fw-medium font-monospace">{{ log.user_id }}</td>
+                            <td class="fw-semibold text-dark">{{ log.target_model.model_name }}</td>
+                            <td class="text-muted">{{ log.target_model.vendor }}</td>
+                            <td class="text-center">
+                                <span class="tier-tag">Tier {{ log.target_model.approved_data_tier }}</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="tier-tag">Tier {{ log.data_tier_submitted }}</span>
+                            </td>
+                            <td class="text-center">
+                                {% if log.action_taken == 'Blocked' %}
+                                <span class="badge badge-blocked">BLOCKED</span>
+                                {% else %}
+                                <span class="badge badge-approved">APPROVED</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center py-5 text-muted">
+                                <div class="fw-semibold">No provenance audit logs recorded yet.</div>
+                                <div class="small mt-1">Incoming POST requests to <code>/api/send-prompt/</code> will be recorded here automatically.</div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Utilitarian Site Footer -->
+    <footer class="site-footer">
+        <div class="container-fluid px-4">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                <div>
+                    <strong>Shadow AI Governance System</strong> | Structured Data Registry &amp; Compliance Auditor
+                </div>
+                <nav class="d-flex gap-3">
+                    <a href="/portal/">Employee Portal</a>
+                    <a href="/simulate/">Simulator</a>
+                    <a href="/privacy-policy/">Privacy Policy</a>
+                    <a href="/terms/">Terms &amp; Conditions</a>
+                    <a href="/admin/">Administration</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Standard Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
